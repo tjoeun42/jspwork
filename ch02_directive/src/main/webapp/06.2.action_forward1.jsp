@@ -5,19 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%
-	String name = "Korea web JSP";
-%>
 </head>
 <body>
-	<h1>Action Inculde Tag Ex1</h1>
-	<jsp:include page="04.3.action_include1.jsp"/><p/>
-	action includeTag의 첫번째 페이지<p/>
-	<%=name %>
+	Forward의 포워딩 되기전의 페이지<p/>
+	<jsp:forward page="06.3.action_forward1.jsp" />
 </body>
 </html>
-
-
-
-
-
