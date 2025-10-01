@@ -33,10 +33,12 @@
 	}
 	%>
 	
-<%-- 	<%
-	for(int i=0; i<hobby.length; i++) {
-		out.print(hobby[i] + " ");
-	}
-	%> --%>
+<%-- 	
+	<%
+		for(int i=0; i<hobby.length; i++) {
+			out.print(hobby[i] + " ");
+		}
+	%> 
+--%>
 </body>
 </html>
