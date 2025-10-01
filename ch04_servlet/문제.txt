@@ -1,0 +1,18 @@
+05.login.jsp
+    만약 idKey의 값을 얻어와서 null이 아니면
+	id님 반갑습니다
+	<a >로그아웃</a>  => 05.logout.jsp
+    그렇지않으면
+	id와 pw를 넣고 서버로 전송
+
+LoginServlet05
+	05.login.jsp에서 보낸 id와 pw가 null이 아니면
+		session에 속성추가 이름: idKey  값 : id
+	
+	05.login.jsp로 가기
+	     response.sendRedirect(" ") 
+
+05.logout.jsp
+	세션 끊어주고 05.login.jsp페이지로 돌아가기
+	   session.invalidate()
+	
