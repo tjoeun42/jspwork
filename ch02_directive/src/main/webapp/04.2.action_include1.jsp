@@ -12,7 +12,8 @@
 <body>
 	<h1>Action Inculde Tag Ex1</h1>
 	<jsp:include page="04.3.action_include1.jsp"></jsp:include><p/>
-	action includeTag의 첫번째 페이지
+	action includeTag의 첫번째 페이지<p/>
+	<%=name %>
 </body>
 </html>
 
