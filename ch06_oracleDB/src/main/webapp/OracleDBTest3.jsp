@@ -16,7 +16,27 @@
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery("select * from department");
 %>
-
+	<table border="1">
+		<tr>
+			<th>DEPT_ID</th>
+			<th>DEPT_TITLE</th>
+			<th>LOCATION_ID</th>
+		</tr>
+	<%
+		while(rs.next()) {
+			String id = rs.getString(1);
+			String title = rs.getString(2);
+			String location = rs.getString(3);
+	%>
+		<tr>
+			<td><%=id %></td>
+			<td><%=title %></td>
+			<td><%=location %></td>
+		</tr>
+	<%		
+		}
+	%>
+	</table>
 <%		
 	} catch(Exception e) {
 		e.printStackTrace();
