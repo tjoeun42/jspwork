@@ -58,7 +58,7 @@
 				<tr>
 					<td>아이디</td>
 					<td>
-						<input name="id">
+						<input name="id" onkeydown="inputIdChk();">
 						<input type="button" value="ID중복확인" onclick="idCheck(this.form.id.value);">
 						<input type="hidden" name="idBtnCheck" value="idUncheck">
 					</td>
@@ -141,7 +141,7 @@
 				</tr>
 				<tr>
 					<td colspan="3" align="center">
-						<input type="button" value="회원가입">&emsp;&emsp;
+						<input type="button" value="회원가입" onclick="inputCheck();">&emsp;&emsp;
 						<input type="reset" value="다시쓰기">&emsp;&emsp;
 						<input type="button" value="로그인" onclick="location.href='login.jsp'">
 					</td>
