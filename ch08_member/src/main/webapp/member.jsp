@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" ></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="script.js"></script>
 <style>
 	* {margin: 0 auto;}
 	div {width:1100px;}
@@ -49,7 +50,7 @@
 </head>
 <body>
 	<div>
-		<form method="post" action="">
+		<form name="frm" method="post" action="memberProc.jsp">
 			<table class="table">
 				<tr>
 					<th colspan="3"><font size="5em">회원가입</font></th>
@@ -58,7 +59,8 @@
 					<td>아이디</td>
 					<td>
 						<input name="id">
-						<input type="button" value="ID중복확인">
+						<input type="button" value="ID중복확인" onclick="idCheck(this.form.id.value);">
+						<input type="hidden" name="idBtnCheck" value="idUncheck">
 					</td>
 					<td>영문과 숫자로만 입력</td>
 				</tr>
@@ -68,7 +70,7 @@
 					<td>특수기호,영문,숫자가 각1개 이상씩 들어가야 되고 8글자 이상</td>
 				</tr>
 				<tr>
-					<td>비밀번호</td>
+					<td>비밀번호 확인</td>
 					<td><input type="password" name="repwd"></td>
 					<td>위의 비밀번호를 한번 더 넣으세요</td>
 				</tr>
