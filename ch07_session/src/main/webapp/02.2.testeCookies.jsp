@@ -16,9 +16,19 @@
 		}
 	}
 %>
-<!-- 메소드를 만들어도 되고, 위의 쿠키 얻어오는 출력문에 넣어서 출력 -->
-이름 : 
-나이 :
-성별 :
+<%!
+	String getCookieValue(Cookie[] cookies, String name) {
+		if(cookies != null) {
+			for(int i=0; i<cookies.length; i++) {
+				if(cookies[i].getName().equals(name))
+					return cookies[i].getValue();
+			}
+		}
+		return null;
+	}
+%>
+이름 : <%=getCookieValue(cookies, "Name") %><p/>
+나이 : <%=getCookieValue(cookies, "Age") %><p/>
+성별 : <%=getCookieValue(cookies, "Gender") %>
 </body>
 </html>
