@@ -1,8 +1,3 @@
-alter session set "_oracle_script" = true;
-create user jsp identified by 1234;
-grant connect, resource to jsp;
-alter user jsp default tablespace users quota unlimited on users;
-
 create table member (
     id varchar2(20) primary key,
     pwd varchar2(20) not null,
