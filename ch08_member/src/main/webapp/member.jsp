@@ -7,12 +7,45 @@
 <title>Insert title here</title>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" ></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 	* {margin: 0 auto;}
 	div {width:1100px;}
 	table {margin-top: 50px;}
 	table th {text-align:center;}	
 </style>
+<script>
+	function findAddr() {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	            let roadAddr = data.roadAddress;  // 도로명 주소
+	            let jibunAddr = data.jibunAddress;	// 지번 주소
+	            let extraAddr = '';
+	            
+	            document.getElementById('postcode').value = data.zonecode;	// 우편번호
+	            
+	            if(data.userSelectedType == 'R') {		// 사용자가 도로명을 선택하면
+	            	if(data.bname != '') { 
+	            		extraAddr += data.bname;
+	            	}
+	            	if(data.buildingName != '') {
+	            	    extraAddr += ', ' + data.buildingName
+	            	}
+	            	roadAddr += extraAddr != '' ? '(' + extraAddr + ')' : '';        	
+	            	document.getElementById('addr').value = roadAddr;
+	            } else {		// 사용자가 지번을 선택
+	            	if(data.buildingName != '') {
+	            	    extraAddr += ', ' + data.buildingName
+	            	}
+	            	jibunAddr += extraAddr != '' ? '(' + extraAddr + ')' : ''; 
+	            	document.getElementById('addr').value = jibunAddr;
+	            }
+	            document.getElementById('detailAddr').focus();         
+	        }
+	    }).open();
+	}
+</script>
+
 </head>
 <body>
 	<div>
