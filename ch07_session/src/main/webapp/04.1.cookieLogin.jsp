@@ -7,6 +7,22 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%
+	String id = "";
+	Cookie[] cookies = request.getCookies();
+	for(int i=0; i<cookies.length; i++) {
+		if(cookies[i].getName().equals("idKey"))
+			id = cookies[i].getValue();
+	}
+	if(!id.equals("")) {
+%>
+	<script>
+		alert("로그인 되었습니다");
+		location.href="04.3.cookieLoginOK.jsp";
+	</script>
+<%
+	} else {
+%>
 	<h1>Cookie 로그인</h1>
 	<form action="04.2.cookieLoginProc.jsp" method="post">
 		<table border="1">
@@ -29,5 +45,6 @@
 			</tr>
 		</table>
 	</form>
+<%} %>
 </body>
 </html>
