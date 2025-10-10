@@ -27,12 +27,13 @@ public class MemberPool {
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
 			rs = pstmt.executeQuery();
-			
+			if(rs.next() && rs.getInt(1) > 0)
+				loginCon = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
 		}
-		
 		return loginCon;
 	}
-	
 }
