@@ -9,6 +9,7 @@ public class MemberDao {
 	ResultSet rs;
 	String sql;
 	
+	// id 중복 체크
 	public boolean checkId(String id) {
 		boolean flag = false;
 		try {
@@ -26,6 +27,7 @@ public class MemberDao {
 		return flag;
 	}
 	
+	// 회원가입
 	public boolean insertMember(Member bean) {
 		boolean flag = false;
 		try {
@@ -51,6 +53,26 @@ public class MemberDao {
 		} finally {
 			pool.freeConnection(con);
 		}
+		return flag;
+	}
+	
+	// login
+	public boolean loginMember(String id, String pwd) {
+		boolean flag = false;
+		
+		try {
+			con = pool.getConnection();
+			sql = "select id from member where id=? and pwd=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			rs = pstmt.executeQuery();
+			flag = rs.next();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}	
 		return flag;
 	}
 }
