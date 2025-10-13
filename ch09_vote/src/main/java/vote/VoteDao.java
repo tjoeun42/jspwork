@@ -14,6 +14,21 @@ public class VoteDao {
 	ResultSet rs;
 	String sql;
 	
+	// 목록중 가장 num이 큰번호 얻어오기
+	public int getMaxNum() {
+		int maxNum = 0;
+		try {
+			con = pool.getConnection();
+			sql = "select max(num) from votelist";
+			rs = con.createStatement().executeQuery(sql);
+			if(rs.next())
+				maxNum = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return maxNum;
+	}
+	
 	// 설문 등록하기
 	public boolean voteInsert(VoteList vlist, VoteItem vitem) {
 		boolean flag = false;
@@ -70,6 +85,49 @@ public class VoteDao {
 				vlist.setSdate(rs.getString(3));
 				vlist.setEdate(rs.getString(4));
 				alist.add(vlist);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+		return alist;
+	}
+	
+	// 설문폼의 질문과 type 가져오기
+	public VoteList getVote(int num) {
+		VoteList vlist = new VoteList();
+		
+		try {
+			con = pool.getConnection();
+			if(num == 0)
+				sql = "select * from votelist order by num desc";
+			else
+				sql = "select * from votelist where num=" + num;
+			
+			rs = con.createStatement().executeQuery(sql);
+			if(rs.next()) {
+				vlist.setQuestion(rs.getString("question"));
+				vlist.setType(rs.getInt("type"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vlist;
+	}
+	
+	// 설문폼의 item 가져오기
+	public ArrayList<String> getItem(int num) {
+		ArrayList<String> alist = new ArrayList<>();
+		try {
+			con = pool.getConnection();
+			if(num == 0) {
+				num = getMaxNum();
+			}
+			sql = "select item from voteitem where listnum=" + num;
+			rs = con.createStatement().executeQuery(sql);
+			while(rs.next()) {
+				alist.add(rs.getString(1));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
