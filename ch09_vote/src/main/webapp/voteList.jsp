@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "vote.*, java.util.*" %>
+<jsp:useBean id="vDao" class="vote.VoteDao" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +12,7 @@
 	<style>
 		* {margin: 0 auto;}
 		div {width:800px;}
-		h2, h5, th {text-align:center; }
+		h2, h5, th, .cen {text-align:center; }
 		a {text-decoration:none; color:black; cursor:pointer;}
 		.m50 {margin-top:50px;}
 		.m30 {margin-top:30px;}
@@ -31,8 +33,20 @@
 				<th>제목</th>
 				<th>시작일~종료일</th>
 			</tr>
-			<tr>
-			</tr>
+			<%
+			ArrayList<VoteList> alist = vDao.getList();
+			for(int i=0; i<alist.size(); i++) {
+				VoteList vlist = alist.get(i);
+				int num = vlist.getNum();
+				String question = vlist.getQuestion();
+				String sdate = vlist.getSdate().substring(0,10);
+				String edate = vlist.getEdate().substring(0,10);
+				
+				out.print("<tr><td class='cen'>" + (alist.size()-i) + "</td>");
+				out.print("	   <td>" + question + "</td>");
+				out.print("	   <td class='cen'>" + sdate + " ~ " + edate + "</td></tr>");
+			}
+			%>
 			<tr>
 				<td colspan="3" align="right"><a href="voteInsert.jsp">설문 작성하기</a><td>
 			</tr>

@@ -1,7 +1,10 @@
 package vote;
 
-import java.sql.*;
-import vote.DBConnectionMgr;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class VoteDao {
 	private DBConnectionMgr pool = DBConnectionMgr.getInstance();
@@ -51,5 +54,28 @@ public class VoteDao {
 			pool.freeConnection(con);
 		}
 		return flag;
+	}
+	
+	// 전체 설문 목록 가져오기
+	public ArrayList<VoteList> getList() {
+		ArrayList<VoteList> alist = new ArrayList<>();	
+		try {
+			con = pool.getConnection();
+			sql = "select * from votelist order by num desc";
+			rs = con.createStatement().executeQuery(sql);
+			while(rs.next()) {
+				VoteList vlist = new VoteList();
+				vlist.setNum(rs.getInt(1));
+				vlist.setQuestion(rs.getString(2));
+				vlist.setSdate(rs.getString(3));
+				vlist.setEdate(rs.getString(4));
+				alist.add(vlist);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+		return alist;
 	}
 }
