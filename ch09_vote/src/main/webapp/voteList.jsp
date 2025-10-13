@@ -10,7 +10,7 @@
 	<style>
 		* {margin: 0 auto;}
 		div {width:800px;}
-		h2, h5, .cen {text-align:center; }
+		h2, h5, th {text-align:center; }
 		a {text-decoration:none; color:black; cursor:pointer;}
 		.m50 {margin-top:50px;}
 		.m30 {margin-top:30px;}
@@ -27,14 +27,14 @@
 		<h5 class="m30">설문리스트</h5>
 		<table class="table m30">
 			<tr>
-				<th class="cen">번호</th>
-				<th class="cen">제목</th>
-				<th class="cen">시작일~종료일</th>
+				<th>번호</th>
+				<th>제목</th>
+				<th>시작일~종료일</th>
 			</tr>
 			<tr>
 			</tr>
 			<tr>
-				<td colspan="3" align="right"><a href="">설문 작성하기</a><td>
+				<td colspan="3" align="right"><a href="voteInsert.jsp">설문 작성하기</a><td>
 			</tr>
 		</table>
 	</div>

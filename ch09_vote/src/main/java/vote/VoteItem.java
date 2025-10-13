@@ -12,7 +12,6 @@ public class VoteItem {
 	}
 
 	public VoteItem(int listnum, int itemnum, String[] item, int count) {
-		super();
 		this.listnum = listnum;
 		this.itemnum = itemnum;
 		this.item = item;
