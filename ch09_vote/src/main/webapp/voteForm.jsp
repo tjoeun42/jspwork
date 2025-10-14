@@ -20,14 +20,9 @@
 <meta charset="UTF-8">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="style.css" rel="stylesheet">
 <title>Insert title here</title>
-<style>
-	* {margin: 0 auto;}
-	.voteForm {width:400px;}
-	h2, h5, th, .cen {text-align:center; }
-	a {text-decoration:none; color:black; cursor:pointer;}
-	.pt5 {padding-top:5px;}
-</style>
+
 </head>
 <body>
 	<div class="voteForm">
@@ -54,10 +49,13 @@
 				<tr>
 					<td class="cen">
 						<input type="submit" value="투표">&emsp;&emsp;
-						<input type="button" value="결과">
+						<input type="button" value="결과"
+							   onclick="window.open('voteView.jsp?num=<%=num %>', 'voteView', 'width=600, height=350')" 	
+						>
 					</td>
 				</tr>
 			</table>
+			<input type="hidden" name="num" value="<%=num %>">
 		</form>
 	</div>
 </body>

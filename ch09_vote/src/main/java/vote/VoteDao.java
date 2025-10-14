@@ -136,4 +136,79 @@ public class VoteDao {
 		}
 		return alist;
 	}
+	
+	// 투표 (count증가)
+	public boolean updateCount(int num, String[] itemnum) {
+		boolean flag = false;
+		
+		try {
+			con = pool.getConnection();
+			sql = "update voteitem set count = count+1 where listnum=? and itemnum=?";
+			pstmt = con.prepareStatement(sql);
+			if(num == 0)
+				num = getMaxNum();
+			for(int i=0; i<itemnum.length; i++) {
+				if(itemnum[i]==null || itemnum[i].equals(""))
+					break;
+				
+				pstmt.setInt(1, num);
+				pstmt.setInt(2, Integer.parseInt(itemnum[i]));
+				int result = pstmt.executeUpdate();
+				if(result > 0)
+					flag = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+		return flag;
+	}
+	
+	// listnum의 전체 count 가져오기
+	public int sumCount(int num) {
+		int count = 0;
+		
+		try {
+			con = pool.getConnection();
+			if(num == 0)
+				num = getMaxNum();
+			sql = "select sum(count) from voteitem where listnum=" + num;
+			rs = con.createStatement().executeQuery(sql);
+			if(rs.next()) 
+				count = rs.getInt(1);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}		
+		return count;
+	}
+
+	// listnum 각각의 item과 count 가져오기
+	public ArrayList<VoteItem> getView(int num) {
+		ArrayList<VoteItem> alist = new ArrayList<>();
+		
+		try {
+			con = pool.getConnection();
+			if(num == 0)
+				num = getMaxNum();
+			sql = "select item, count from voteitem where listnum=" + num;
+			rs = con.createStatement().executeQuery(sql);
+			while(rs.next()) {
+				VoteItem vitem = new VoteItem();
+//				String item[] = new String[1];
+//				item[0] = rs.getString(1);
+				String item[] = {rs.getString(1)};
+				vitem.setItem(item);
+				vitem.setCount(rs.getInt(2));
+				alist.add(vitem);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+		return alist;
+	}
 }

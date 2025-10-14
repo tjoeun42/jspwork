@@ -6,19 +6,11 @@
 <meta charset="UTF-8">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="style.css" rel="stylesheet">
 <title>투표 추가</title>
-<style>
-	* {margin: 0 auto;}
-	div {width:600px;}
-	h2, h5, .cen {text-align:center; }
-	a {text-decoration:none; color:black; cursor:pointer;}
-	.m50 {margin-top:50px;}
-	.m30 {margin-top:30px;}
-	table {width:600px;}
-</style>
 </head>
 <body>
-	<div>
+	<div class="ques">
 		<h2 class="m50">투표 프로그램</h2>
 		<hr>
 		
