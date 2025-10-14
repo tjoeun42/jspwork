@@ -12,11 +12,15 @@ public class BoardDao {
 	String sql;
 	
 	// 게시판 목록 가져오기
-	public ArrayList<Board> getBoardList() {
+	public ArrayList<Board> getBoardList(String keyField, String keyWord) {
 		ArrayList<Board> alist = new ArrayList<>();	
 		try {
 			con = pool.getConnection();
-			sql = "select * from board order by num desc";
+			if(keyWord.equals("") || keyWord==null) {
+				sql = "select * from board order by num desc";	
+			} else {
+				sql = "select * from board where " + keyField + " like '%" + keyWord + "%' order by num desc";
+			}
 			rs = con.createStatement().executeQuery(sql);
 			while(rs.next()) {
 				Board bean = new Board();

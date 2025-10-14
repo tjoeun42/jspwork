@@ -3,12 +3,7 @@
 <%@ page import="java.util.*, board.*" %>
 <jsp:useBean id="bDao" class="board.BoardDao" />
 <%
-	String keyField= "", keyWord = "";
-	if(request.getParameter("keyWord") != null) {
-		keyField = request.getParameter("keyField");
-		keyWord = request.getParameter("keyWord");	
-	}
-	ArrayList<Board> alist = bDao.getBoardList(keyField, keyWord);
+	ArrayList<Board> alist = bDao.getBoardList();
 %>
 <!DOCTYPE html>
 <html>
@@ -56,15 +51,7 @@
 				</td>
 			</tr>
 		</table>
-		<form action="list.jsp" name="searchFrm">
-			<select name="keyField">
-				<option value = "name">이름</option>
-				<option value = "subject">제목</option>
-				<option value = "content">내용</option>
-			</select>
-			<input name="keyWord" required>
-			<input type="submit" value="찾기">
-		</form>
+		<hr>
 		
 	</div>
 </body>
