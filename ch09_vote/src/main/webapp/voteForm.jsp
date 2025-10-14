@@ -50,7 +50,7 @@
 					<td class="cen">
 						<input type="submit" value="투표">&emsp;&emsp;
 						<input type="button" value="결과"
-							   onclick="window.open('voteView.jsp?num=<%=num %>', 'voteView', 'width=600, height=350')" 	
+							   onclick="window.open('voteView.jsp?num=<%=num %>', 'voteView', 'width=600, height=400')" 	
 						>
 					</td>
 				</tr>

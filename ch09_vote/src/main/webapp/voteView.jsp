@@ -60,7 +60,9 @@
 			<%} // for end %>
 		</table>
 		<p/>
-		<input type="button" onclick="window.close()" value="닫기">
+		<div class="d-grid col-2 mx-auto">
+			<button type="button" class="btn btn-light" onclick="window.close()">닫기</button>
+		</div>
 	</div>
 </body>
 </html>
