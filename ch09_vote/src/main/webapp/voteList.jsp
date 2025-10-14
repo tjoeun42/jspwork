@@ -24,6 +24,7 @@
 		<hr>
 		
 		<h5 class="m30">설문폼</h5>
+		<jsp:include page="voteForm.jsp" />
 		<hr>
 		
 		<h5 class="m30">설문리스트</h5>
@@ -43,7 +44,7 @@
 				String edate = vlist.getEdate().substring(0,10);
 				
 				out.print("<tr><td class='cen'>" + (alist.size()-i) + "</td>");
-				out.print("	   <td>" + question + "</td>");
+				out.print("	   <td><a href='voteList.jsp?num="+num+"'>" + question + "</a></td>");
 				out.print("	   <td class='cen'>" + sdate + " ~ " + edate + "</td></tr>");
 			}
 			%>
