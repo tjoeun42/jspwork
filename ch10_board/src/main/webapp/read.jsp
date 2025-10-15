@@ -23,15 +23,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style>
-	table{width:550px; margin-top: 50px;}
-	th, td {height:30px;}
-	a {text-decoration:none; color:black; cursor:pointer;}
-</style>
+<link href="style_normal.css" rel="stylesheet">
 <title>상세보기</title>
 </head>
 <body>
-	<table align="center" class="read-table">
+	<table align="center">
 		<tr>
 			<th colspan=4 bgcolor="#8041D9"><font color="white">글 읽 기</font></th>
 		</tr>
@@ -54,9 +50,9 @@
 		<tr>
 			<td colspan="4" align="center"><hr/>
 				[ <a href="">리스트</a> | 
-				<a href=""> 수 정</a> | 
+				<a href="update.jsp?num=<%=num%>&nowPage=<%=nowPage%>">수 정</a> | 
 				<a href="">답 변</a> | 
-				<a href=""> 삭 제</a> ]
+				<a href="delete.jsp?num=<%=num%>&nowPage=<%=nowPage%>"> 삭 제</a> ]
 			</td>
 		</tr>
 	</table>
