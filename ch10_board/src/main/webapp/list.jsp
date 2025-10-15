@@ -3,15 +3,34 @@
 <%@ page import="java.util.*, board.*" %>
 <jsp:useBean id="bDao" class="board.BoardDao" />
 <%
+	int totalRecord = 0;		// 총 레코드수
+	int numPerPage = 10;		// 1페이지당 레코드수
+	int pagePerBlock = 5;		// 블록당 페이지수 [1][2][3][4][5]
+			
+	int totalPage = 0;			// 총 페이지 수
+	int totalBlock = 0;			// 총 블록 수
+	
+	int nowPage = 1;			// 현재 해당하는 페이지
+	int nowBlock = 1;			// 현재 해당하는 블록
+	
+	int start = 0;				// DB에서 select시작번호(한페이지에 필요한 만큼 게시물 가져오기)
+	int end = 0;				// start번호부터 10개 가져오기
+	int listSize = 0;			// 현재 읽어온 레코드 수
+	
 	String keyField= "", keyWord = "";
 	if(request.getParameter("keyWord") != null) {
 		keyField = request.getParameter("keyField");
 		keyWord = request.getParameter("keyWord");	
 	}
-	ArrayList<Board> alist = bDao.getBoardList(keyField, keyWord);
 	
-	int nowPage = 1;
-	
+	totalRecord = bDao.getTotalRecord(keyField, keyWord);
+	totalPage = (int)Math.ceil(totalRecord / (double)numPerPage);
+	totalBlock = (int)Math.ceil(totalPage / (double)pagePerBlock);
+	nowBlock = (int)Math.ceil(nowPage / (double)pagePerBlock);
+
+	start = nowPage * numPerPage - numPerPage + 1;
+	end = nowPage * numPerPage;			
+
 	if(request.getParameter("reload") != null) {
 		if(request.getParameter("reload").equals("true")) {
 			keyField = "";
@@ -44,7 +63,7 @@
 		<h2 class="m30">JSPBoard</h2>
 		<table class="table m30">
 			<tr>
-				<td colspan=5 class="right-align">Total : </td>
+				<td colspan=5 class="right-align">Total : <%=totalRecord %>Articles(<font color="red"><%=nowPage %>/<%=totalPage %>Pages</font>)</td>
 			</tr>
 			<tr>
 				<th width="12%">번호</th>
@@ -54,6 +73,8 @@
 				<th width="12%">조회수</th>
 			</tr>
 			<%
+			ArrayList<Board> alist = bDao.getBoardList(keyField, keyWord, start, end);
+			
 			for(int i=0; i<alist.size(); i++) {
 				Board board = alist.get(i);
 			%>

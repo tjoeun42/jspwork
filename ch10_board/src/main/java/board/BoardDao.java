@@ -11,15 +11,39 @@ public class BoardDao {
 	ResultSet rs;
 	String sql;
 	
+	// total레코드 수
+	public int getTotalRecord(String keyField, String keyWord) {
+		int totalRecord = 0;	
+		try {
+			con = pool.getConnection();
+			if(keyWord.equals("") || keyWord == null) {
+				sql = "select count(num) from board";
+				pstmt = con.prepareStatement(sql);
+			} else {
+				sql = "select count(num) from board where " + keyField + " like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next())
+				totalRecord = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+		return totalRecord;
+	}
+	
 	// 게시판 목록 가져오기
-	public ArrayList<Board> getBoardList(String keyField, String keyWord) {
+	public ArrayList<Board> getBoardList(String keyField, String keyWord, int start, int end) {
 		ArrayList<Board> alist = new ArrayList<>();	
 		try {
 			con = pool.getConnection();
 			if(keyWord.equals("") || keyWord==null) {
-				sql = "select * from board order by num desc";	
+				sql = "select * from (select ROWNUM as RNUM, BT1.* from (select * from board order by ref desc, pos) BT1) where RNUM between ? and ?";
 			} else {
-				sql = "select * from board where " + keyField + " like '%" + keyWord + "%' order by num desc";
+				sql = "select * from (select ROWNUM as RNUM, BT1.* from (select * from board order by ref desc, pos) BT1 where " + keyField + " like ?) where RNUM between ? and ?";
 			}
 			rs = con.createStatement().executeQuery(sql);
 			while(rs.next()) {
@@ -122,25 +146,26 @@ public class BoardDao {
 		return result;
 	}
 	
+	
+
+
 	// 
-	public ArrayList<Board> getList2() {
-		ArrayList<Board> alist = new ArrayList<>();	
-		try {
-			con = pool.getConnection();
-			sql = "";
-			rs = con.createStatement().executeQuery(sql);
-			while(rs.next()) {
-				
+		public ArrayList<Board> getList2() {
+			ArrayList<Board> alist = new ArrayList<>();	
+			try {
+				con = pool.getConnection();
+				sql = "";
+				rs = con.createStatement().executeQuery(sql);
+				while(rs.next()) {
+					
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			pool.freeConnection(con);
+			return alist;
 		}
-		return alist;
-	}
-
-
 
 	
 }
