@@ -9,7 +9,15 @@
 		keyWord = request.getParameter("keyWord");	
 	}
 	ArrayList<Board> alist = bDao.getBoardList(keyField, keyWord);
+	int nowPage = 1;
 %>
+<script type="text/javascript">
+	function read(num) {
+		document.readFrm.num.value = num;
+		document.readFrm.action = "read.jsp";
+		document.readFrm.submit();
+	}
+</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +47,7 @@
 			%>
 				<tr>
 					<td class="cen"><%=alist.size()-i %></td>
-					<td><%=board.getSubject() %></td>
+					<td><a href="javascript:read('<%=board.getNum() %>')"><%=board.getSubject() %></a></td>
 					<td class="cen"><%=board.getName() %></td>
 					<td class="cen"><%=board.getRegdate().substring(0,10) %></td>
 					<td class="cen"><%=board.getCount() %></td>
@@ -64,6 +72,12 @@
 			</select>
 			<input name="keyWord" required>
 			<input type="submit" value="찾기">
+		</form>
+		<form name="readFrm">
+			<input type="hidden" name="num">
+			<input type="hidden" name="nowPage" value="<%=nowPage %>">
+			<input type="hidden" name="keyField" value="<%=keyField %>">
+			<input type="hidden" name="keyWord" value="<%=keyWord %>">		
 		</form>
 		
 	</div>
