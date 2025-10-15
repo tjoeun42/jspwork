@@ -71,7 +71,7 @@
 			<tr>
 				<td colspan=3 class="cen">[1]</td>
 				<td colspan=2 class="right-align">
-					<a href = "">[글쓰기]</a>&emsp;
+					<a href = "post.jsp">[글쓰기]</a>&emsp;
 					<a href = "javascript:list();">[처음으로]</a>&emsp;
 				</td>
 			</tr>

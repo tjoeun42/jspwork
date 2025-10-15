@@ -17,6 +17,9 @@ public class BoardUpdateServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nowPage = request.getParameter("nowPage");
 		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
 		Board upBean = new Board();
 		upBean.setNum(Integer.parseInt(request.getParameter("num")));
 		upBean.setName(request.getParameter("name"));
@@ -26,9 +29,6 @@ public class BoardUpdateServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Board dbBean = (Board)session.getAttribute("bean");
-		
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
 		
 		BoardDao bDao = new BoardDao();
 		if(dbBean.getPass().equals(upBean.getPass())) {
