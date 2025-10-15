@@ -9,8 +9,26 @@
 		keyWord = request.getParameter("keyWord");	
 	}
 	ArrayList<Board> alist = bDao.getBoardList(keyField, keyWord);
-
+	
+	int nowPage = 1;
+	
+	if(request.getParameter("reload") != null) {
+		if(request.getParameter("reload").equals("true")) {
+			keyField = "";
+			keyWord = "";
+		}
+	}
 %>
+<script type="text/javascript">
+	function list() {
+		document.listFrm.submit();
+	}
+	function read(num) {
+		document.readFrm.num.value = num;
+		// document.readFrm.action = "read.jsp";
+		document.readFrm.submit();
+	}
+</script>
 
 <!DOCTYPE html>
 <html>
@@ -54,7 +72,7 @@
 				<td colspan=3 class="cen">[1]</td>
 				<td colspan=2 class="right-align">
 					<a href = "">[글쓰기]</a>&emsp;
-					<a href = "">[처음으로]</a>&emsp;
+					<a href = "javascript:list();">[처음으로]</a>&emsp;
 				</td>
 			</tr>
 		</table>
@@ -68,6 +86,19 @@
 			<input type="submit" value="찾기">
 		</form>
 		
+		<!-- 처음으로 누르면 화면 reload -->
+		<form name="listFrm">
+			<input type="hidden" name="reload" value="true">
+			<input type="hidden" name="nowPage" value = "1">
+		</form>
+		
+		<!-- 제목을 누르면 상세보기 페이지로 가기 -->
+		<form name="readFrm" action="read.jsp">
+			<input type="hidden" name="num">
+			<input type="hidden" name="nowPage" value="<%=nowPage %>">
+			<input type="hidden" name="keyField" value="<%=keyField %>">
+			<input type="hidden" name="keyWord" value="<%=keyWord %>">
+		</form>
 	</div>
 </body>
 </html>

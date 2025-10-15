@@ -42,6 +42,47 @@ public class BoardDao {
 		return alist;
 	}
 	
+	// 조회수 증가
+	public void upCount(int num) {
+		try {
+			con = pool.getConnection();
+			sql = "update board set count = count+1 where num=" + num;
+			con.createStatement().executeUpdate(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+	}
+	
+	// num에 해당하는 게시물 얻어오기
+	public Board getBoard(int num) {
+		Board bean = new Board();
+		try {
+			con = pool.getConnection();
+			sql = "select * from board where num="+num;
+			rs = con.createStatement().executeQuery(sql);
+			if(rs.next()) {
+				bean.setNum(rs.getInt("num"));
+				bean.setName(rs.getString("name"));
+				bean.setSubject(rs.getString("subject"));
+				bean.setContent(rs.getString("content"));
+				bean.setPos(rs.getInt("pos"));
+				bean.setRef(rs.getInt("ref"));
+				bean.setDepth(rs.getInt("depth"));
+				bean.setRegdate(rs.getString("regdate"));
+				bean.setPass(rs.getString("pass"));
+				bean.setIp(rs.getString("ip"));
+				bean.setCount(rs.getInt("count"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+		return bean;
+	}
+	
 	// 
 	public ArrayList<Board> getList2() {
 		ArrayList<Board> alist = new ArrayList<>();	
