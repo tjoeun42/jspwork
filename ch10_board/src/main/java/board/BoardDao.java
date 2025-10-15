@@ -83,6 +83,24 @@ public class BoardDao {
 		return bean;
 	}
 	
+	// 게시물 수정
+	public void updateBoard(Board bean) {
+		try {
+			con = pool.getConnection();
+			sql = "update board set name=?, subject=?, content=? where num=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, bean.getName());
+			pstmt.setString(2, bean.getSubject());
+			pstmt.setString(3, bean.getContent());
+			pstmt.setInt(4, bean.getNum());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+	}
+	
 	// 
 	public ArrayList<Board> getList2() {
 		ArrayList<Board> alist = new ArrayList<>();	
@@ -100,4 +118,6 @@ public class BoardDao {
 		}
 		return alist;
 	}
+
+	
 }
