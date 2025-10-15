@@ -37,10 +37,9 @@ public class BoardUpdateServlet extends HttpServlet {
 			response.sendRedirect(url);
 		} else {
 			out.print("<script>");
-			out.print("alert('비밀번호가 맞지않습니다')");
+			out.print("alert('비밀번호가 맞지않습니다');");
 			out.print("history.back();");
 			out.print("</script>");
 		}
 	}
-
 }

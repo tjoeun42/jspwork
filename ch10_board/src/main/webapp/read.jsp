@@ -16,7 +16,7 @@
 		board = bDao.getBoard(num);
 		session.setAttribute("bean", board);
 	} else {
-		board = sessionBoard;
+		board = bDao.getBoard(num);
 	}
 %>
 <!DOCTYPE html>
