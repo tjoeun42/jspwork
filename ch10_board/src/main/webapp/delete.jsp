@@ -36,21 +36,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>삭제</title>
+<link href="style_normal.css" rel="stylesheet">
 </head>
 <body>
 	<form action="delete.jsp" method="post">
-		<table>
+		<table align="center">
 			<tr>
-				<th height="30">사용자의 비밀번호를 입력해 주세요</th>
+				<th bgcolor="#D5D5D5">사용자의 비밀번호를 입력해 주세요</th>
 			</tr>
 			<tr>
 				<th><input type="password" name="pass" required></th>
 			</tr>
 			<tr>
-				<td>
-					<input type="submit" value="삭제">
-					<input type="reset" value="다시쓰기">
+				<th><hr></th>
+			</tr>
+			<tr>
+				<td align="center">
+					<input type="submit" value="삭제">&nbsp;
+					<input type="reset" value="다시쓰기">&nbsp;
 					<input type="button" value="뒤로" onclick="history.back();">
 				</td>
 			</tr>
