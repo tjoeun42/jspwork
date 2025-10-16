@@ -174,6 +174,7 @@ public class BoardDao {
 		return alist;
 	}
 	
+	/*
 	public static void main(String[] args) {
 		new BoardDao().insert();
 	}
@@ -194,4 +195,5 @@ public class BoardDao {
 			pool.freeConnection(con);
 		}
 	}
+	*/
 }

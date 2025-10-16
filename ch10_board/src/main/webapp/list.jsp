@@ -127,6 +127,7 @@
 							</a>
 				<%	
 						}
+						out.print("&nbsp;");
 						if(totalBlock > nowBlock) {
 				%>
 							<a href = "javascript:block('<%=nowBlock+1 %>');">...next</a>
