@@ -23,20 +23,24 @@
 		keyWord = request.getParameter("keyWord");	
 	}
 	
-	totalRecord = bDao.getTotalRecord(keyField, keyWord);
-	totalPage = (int)Math.ceil(totalRecord / (double)numPerPage);
-	totalBlock = (int)Math.ceil(totalPage / (double)pagePerBlock);
-	nowBlock = (int)Math.ceil(nowPage / (double)pagePerBlock);
-
-	start = nowPage * numPerPage - numPerPage + 1;
-	end = nowPage * numPerPage;			
-
 	if(request.getParameter("reload") != null) {
 		if(request.getParameter("reload").equals("true")) {
 			keyField = "";
 			keyWord = "";
 		}
 	}
+	
+	if(request.getParameter("nowPage") != null) {
+		nowPage = Integer.parseInt(request.getParameter("nowPage"));
+	}
+	
+	totalRecord = bDao.getTotalRecord(keyField, keyWord);
+	totalPage = (int)Math.ceil(totalRecord / (double)numPerPage);
+	totalBlock = (int)Math.ceil(totalPage / (double)pagePerBlock);
+	nowBlock = (int)Math.ceil(nowPage / (double)pagePerBlock);
+
+	start = nowPage * numPerPage - numPerPage + 1;
+	end = nowPage * numPerPage;	
 %>
 <script type="text/javascript">
 	function list() {
@@ -44,7 +48,15 @@
 	}
 	function read(num) {
 		document.readFrm.num.value = num;
-		// document.readFrm.action = "read.jsp";
+		document.readFrm.action = "read.jsp";
+		document.readFrm.submit();
+	}
+	function block(value) {
+		
+	}
+	function pageing(page) {
+		document.readFrm.nowPage.value = page;
+		// document.readFrm.action = "list.jsp";  생략가능
 		document.readFrm.submit();
 	}
 </script>
@@ -59,6 +71,9 @@
 <title>게시판</title>
 </head>
 <body>
+<%=start %>
+<%=end %>
+<%=nowPage %>
 	<div class="list">
 		<h2 class="m30">JSPBoard</h2>
 		<table class="table m30">
@@ -74,23 +89,47 @@
 			</tr>
 			<%
 			ArrayList<Board> alist = bDao.getBoardList(keyField, keyWord, start, end);
-			
-			for(int i=0; i<alist.size(); i++) {
+			listSize = alist.size();
+
+			for(int i=0; i<listSize; i++) {
 				Board board = alist.get(i);
 			%>
 				<tr>
-					<td class="cen"><%=alist.size()-i %></td>
+					<td class="cen"><%=totalRecord-((nowPage-1)*numPerPage)-i %></td>
 					<td><a href="javascript:read('<%=board.getNum() %>')"><%=board.getSubject() %></a></td>
 					<td class="cen"><%=board.getName() %></td>
 					<td class="cen"><%=board.getRegdate().substring(0,10) %></td>
 					<td class="cen"><%=board.getCount() %></td>
 				</tr>
-			<%} // for end%>
+			<%} // for end %>
 			<tr>
 				<td colspan=5><br><br></td>
 			</tr>
 			<tr>
-				<td colspan=3 class="cen">[1]</td>
+				<td colspan=3 class="cen">
+				<% 
+					int pageStart = (nowBlock-1) * pagePerBlock + 1;
+					int pageEnd = (pageStart + pagePerBlock <= totalPage) ? (pageStart + pagePerBlock) : totalPage;                                   
+					if(totalPage != 1) {
+						if(nowBlock > 1) {
+				%>
+							<a href = "javascript:block('<%=nowBlock-1 %>')">prev...</a>&ensp;
+				<%			
+						} 
+						for(; pageStart<=pageEnd; pageStart++){
+				%>
+							<a href = "javascript:pageing('<%=pageStart %>')">[<%=pageStart %>]</a>&ensp;
+				<%	
+						}
+						if(totalBlock > nowBlock) {
+				%>
+							<a href = "javascript:block('<%=nowBlock-1 %>')">...next</a>
+				<%		
+						}
+					} // if(totalPage != 1) end
+				%>
+				
+				</td>
 				<td colspan=2 class="right-align">
 					<a href = "post.jsp">[글쓰기]</a>&emsp;
 					<a href = "javascript:list();">[처음으로]</a>&emsp;
@@ -114,7 +153,7 @@
 		</form>
 		
 		<!-- 제목을 누르면 상세보기 페이지로 가기 -->
-		<form name="readFrm" action="read.jsp">
+		<form name="readFrm">
 			<input type="hidden" name="num">
 			<input type="hidden" name="nowPage" value="<%=nowPage %>">
 			<input type="hidden" name="keyField" value="<%=keyField %>">

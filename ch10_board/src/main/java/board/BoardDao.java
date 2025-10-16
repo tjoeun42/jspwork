@@ -42,10 +42,17 @@ public class BoardDao {
 			con = pool.getConnection();
 			if(keyWord.equals("") || keyWord==null) {
 				sql = "select * from (select ROWNUM as RNUM, BT1.* from (select * from board order by ref desc, pos) BT1) where RNUM between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
 			} else {
 				sql = "select * from (select ROWNUM as RNUM, BT1.* from (select * from board order by ref desc, pos) BT1 where " + keyField + " like ?) where RNUM between ? and ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyWord + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
 			}
-			rs = con.createStatement().executeQuery(sql);
+			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Board bean = new Board();
 				bean.setNum(rs.getInt("num"));
@@ -150,22 +157,22 @@ public class BoardDao {
 
 
 	// 
-		public ArrayList<Board> getList2() {
-			ArrayList<Board> alist = new ArrayList<>();	
-			try {
-				con = pool.getConnection();
-				sql = "";
-				rs = con.createStatement().executeQuery(sql);
-				while(rs.next()) {
-					
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				pool.freeConnection(con);
+	public ArrayList<Board> getList2() {
+		ArrayList<Board> alist = new ArrayList<>();	
+		try {
+			con = pool.getConnection();
+			sql = "";
+			rs = con.createStatement().executeQuery(sql);
+			while(rs.next()) {
+				
 			}
-			return alist;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
 		}
+		return alist;
+	}
 
 	
 }
