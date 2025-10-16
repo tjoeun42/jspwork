@@ -174,13 +174,39 @@ public class BoardDao {
 		return alist;
 	}
 
-	public void replyUpBoard(int ref, int pos) {
+	// 답변 위치값 증가
+	public void replyUpPos(int ref, int pos) {
 		try {
 			con = pool.getConnection();
 			sql = "update board set pos = pos+1 where ref=? and pos > ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, ref);
 			pstmt.setInt(2, pos);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+	}
+	
+	public void replyBoard(Board bean) {
+		try {
+			con = pool.getConnection();
+			sql = "insert into board values(SEQ_BOARD.NEXTVAL,?,?,?,?,?,?,SYSDATE,?,?,DEFAULT)";
+			
+			int pos = bean.getPos() + 1;
+			int depth = bean.getDepth() + 1;
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, bean.getName());
+			pstmt.setString(2, bean.getSubject());
+			pstmt.setString(3, bean.getContent());
+			pstmt.setInt(4, pos);
+			pstmt.setInt(5, bean.getRef());
+			pstmt.setInt(6, depth);
+			pstmt.setString(7, bean.getPass());
+			pstmt.setString(8, bean.getIp());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -23,7 +23,9 @@ public class BoardReplyServlet extends HttpServlet {
 		board.setIp(request.getParameter("ip"));
 		
 		BoardDao vDao = new BoardDao();
-		vDao.replyUpBoard(board.getRef(), board.getPos());
+		vDao.replyUpPos(board.getRef(), board.getPos());
+		vDao.replyBoard(board);
+		
+		response.sendRedirect("list.jsp?nowPage=" + request.getParameter("nowPage"));
 	}
-
 }
