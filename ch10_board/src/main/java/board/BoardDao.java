@@ -156,23 +156,7 @@ public class BoardDao {
 	
 
 
-	// 
-	public ArrayList<Board> getList2() {
-		ArrayList<Board> alist = new ArrayList<>();	
-		try {
-			con = pool.getConnection();
-			sql = "";
-			rs = con.createStatement().executeQuery(sql);
-			while(rs.next()) {
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			pool.freeConnection(con);
-		}
-		return alist;
-	}
+	
 
 	// 답변 위치값 증가
 	public void replyUpPos(int ref, int pos) {
@@ -190,6 +174,7 @@ public class BoardDao {
 		}
 	}
 	
+	// 댓글 등록
 	public void replyBoard(Board bean) {
 		try {
 			con = pool.getConnection();
@@ -213,6 +198,27 @@ public class BoardDao {
 		} finally {
 			pool.freeConnection(con);
 		}
+	}
+	
+	// board 삭제
+	public int deleteBoard(int num) {
+		int result = 0;
+		try {
+			con = pool.getConnection();
+			sql = "select count(*) from board where ref=" + num;
+			rs = con.createStatement().executeQuery(sql);
+			if(rs.next()) {
+				if(rs.getInt(1) <= 1) {
+					sql = "delete from board where num=" + num;
+					result = con.createStatement().executeUpdate(sql);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+		return result;
 	}
 	
 	/*

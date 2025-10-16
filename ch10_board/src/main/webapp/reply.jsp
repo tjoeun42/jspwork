@@ -16,7 +16,7 @@
 	<form method="post" action="boardReply">
 		<table align="center">
 			<tr>
-				<th colspan=2 bgcolor="#66793C"><font color="white">댓 글 등 록</font></th>
+				<th colspan=2 bgcolor="#007087"><font color="white">댓 글 등 록</font></th>
 			</tr>
 			<tr>
 				<td><br></td>

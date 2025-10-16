@@ -94,7 +94,17 @@
 			%>
 				<tr>
 					<td class="cen"><%=totalRecord-((nowPage-1)*numPerPage)-i %></td>
-					<td><a href="javascript:read('<%=board.getNum() %>')"><%=board.getSubject() %></a></td>
+					<td>
+					<%
+						if(board.getDepth() > 0) {
+							for(int j=0; j<board.getDepth(); j++) {
+								out.print("&emsp;");
+							}
+							out.print("↳");
+						}
+					%>
+						<a href="javascript:read('<%=board.getNum() %>')"><%=board.getSubject() %></a>
+					</td>
 					<td class="cen"><%=board.getName() %></td>
 					<td class="cen"><%=board.getRegdate().substring(0,10) %></td>
 					<td class="cen"><%=board.getCount() %></td>
