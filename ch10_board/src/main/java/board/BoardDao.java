@@ -173,6 +173,21 @@ public class BoardDao {
 		}
 		return alist;
 	}
+
+	public void replyUpBoard(int ref, int pos) {
+		try {
+			con = pool.getConnection();
+			sql = "update board set pos = pos+1 where ref=? and pos > ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, ref);
+			pstmt.setInt(2, pos);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+	}
 	
 	/*
 	public static void main(String[] args) {

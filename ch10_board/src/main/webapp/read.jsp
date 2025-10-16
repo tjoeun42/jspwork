@@ -57,7 +57,7 @@
 			<td colspan="4" align="center"><hr/>
 				[ <a href="javascript:list()">리스트</a> | 
 				<a href="update.jsp?num=<%=num%>&nowPage=<%=nowPage%>">수 정</a> | 
-				<a href="">답 변</a> | 
+				<a href="reply.jsp?nowPage=<%=nowPage%>">답 변</a> | 
 				<a href="delete.jsp?num=<%=num%>&nowPage=<%=nowPage%>"> 삭 제</a> ]
 			</td>
 		</tr>
