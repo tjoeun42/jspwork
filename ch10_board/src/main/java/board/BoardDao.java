@@ -173,6 +173,25 @@ public class BoardDao {
 		}
 		return alist;
 	}
-
 	
+	public static void main(String[] args) {
+		new BoardDao().insert();
+	}
+	
+	public void insert() {
+		try {
+			con = pool.getConnection();
+			sql = "insert into board values(?,'이름','제목','내용',0,?,0,sysdate,'1234','0:0:0:0:0:0:0:1',default)";
+			pstmt = con.prepareStatement(sql);
+			for(int i=500; i<650; i++) {
+				pstmt.setInt(1, i);
+				pstmt.setInt(2, i);
+				pstmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+	}
 }

@@ -52,7 +52,8 @@
 		document.readFrm.submit();
 	}
 	function block(value) {
-		
+		document.readFrm.nowPage.value = <%=pagePerBlock %> * (value-1) + 1;
+		document.readFrm.submit();  
 	}
 	function pageing(page) {
 		document.readFrm.nowPage.value = page;
@@ -71,9 +72,6 @@
 <title>게시판</title>
 </head>
 <body>
-<%=start %>
-<%=end %>
-<%=nowPage %>
 	<div class="list">
 		<h2 class="m30">JSPBoard</h2>
 		<table class="table m30">
@@ -109,21 +107,29 @@
 				<td colspan=3 class="cen">
 				<% 
 					int pageStart = (nowBlock-1) * pagePerBlock + 1;
-					int pageEnd = (pageStart + pagePerBlock <= totalPage) ? (pageStart + pagePerBlock) : totalPage;                                   
+					int pageEnd = (pageStart + pagePerBlock <= totalPage) ? (pageStart + pagePerBlock) : totalPage + 1;                                   
 					if(totalPage != 1) {
 						if(nowBlock > 1) {
 				%>
-							<a href = "javascript:block('<%=nowBlock-1 %>')">prev...</a>&ensp;
+							<a href = "javascript:block('<%=nowBlock-1 %>');">prev...</a>&nbsp;
 				<%			
 						} 
-						for(; pageStart<=pageEnd; pageStart++){
+						for(; pageStart<pageEnd; pageStart++){
 				%>
-							<a href = "javascript:pageing('<%=pageStart %>')">[<%=pageStart %>]</a>&ensp;
+							<a href = "javascript:pageing('<%=pageStart %>')">
+							
+							<% if(pageStart==nowPage) { %>
+								 <font color="blue">[<%=pageStart %>]</font>
+							<% } else {%>
+								 [<%=pageStart %>]
+							<% } %>
+							
+							</a>
 				<%	
 						}
 						if(totalBlock > nowBlock) {
 				%>
-							<a href = "javascript:block('<%=nowBlock-1 %>')">...next</a>
+							<a href = "javascript:block('<%=nowBlock+1 %>');">...next</a>
 				<%		
 						}
 					} // if(totalPage != 1) end
@@ -136,7 +142,7 @@
 				</td>
 			</tr>
 		</table>
-		<form action="list.jsp" name="searchFrm">
+		<form action="list.jsp" name="searchFrm" align="center">
 			<select name="keyField">
 				<option value = "name">이름</option>
 				<option value = "subject">제목</option>
