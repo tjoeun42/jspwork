@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<title>ajax 개요</title>
 </head>
 <body>
 	<h1>AJAX개요</h1>
@@ -36,7 +37,7 @@
 		- 요청 처리 후에 돌아온 응답데이터를 가지고 현재페이지에 새로운 요소를 만들어서 뿌려줘야 함 => dom요소들을 새롭게 만들어내는 구문을 잘익혀둬야됨
 		<br><br>
 		
-		* AJAX 구현 방식 => 순수 JavaScript방식 / jQuery방식(코드가 간결하고 사용하기 휘움)
+		* AJAX 구현 방식 => 순수 JavaScript방식 / jQuery방식(코드가 간결하고 사용하기 쉬움)
 	</p>
 	
 	<pre>
@@ -90,5 +91,83 @@
 	- processData : 서버로 보내는 값에 대한 형태 설정 여부(기본 데이터를 원하는 경우 false설정)
 	- timeout : 서버 요청 시 응답 대기 시간(milisecond)
 	</pre>
+	
+	<h1>jQuery 방식을 이용한 AJAX 테스트</h1>
+	
+	<h3>1. 버튼 클릭시 get방식으로 서버에 요청 및 응답</h3>
+	
+	입력 : <input type="text" id="input1">&nbsp;
+		  <input type="button" id="btn1" value="전송">
+	<br>
+	응답 : <span id="output1">현재 응답 없음</span>
+	
+	<script type="text/javascript">
+		$("#btn1").click(function() {
+			$.ajax({
+				url : "ajax1.do",
+				data : {input : $('#input1').val()},
+				type : "get",
+				success : function(result) {
+					console.log("ajax통신 성공");
+					console.log(result);
+					$("#output1").text(result);
+				},
+				error : function() {
+					console.log("ajax통신 실패");
+				},
+				complete : function() {
+					console.log("ajax통신 여부와 상관없이 무조건 실행");
+				}
+			})
+		})
+	</script>
+	
+	<hr>
+	
+	<form action="idCheck.me" name="idCheckFrm">
+		ID : <input name="id" id="id" required >&nbsp; <input type="button" value="ID중복확인" id="idCheckBtn"><p/>
+		<input type="submit" value="회원가입" disabled>
+	</form>
+
+	<script type="text/javascript">
+		$("#idCheckBtn").click(function() {
+			let id = $('#id');
+			$.ajax({
+				url : "idCheck.me",
+				data : {checkId: id.val()},
+				success : function(result) {
+					console.log(result);
+					if(result == 'idN') {
+						alert("이미 사용중이거나 탈퇴한 아이디 입니다.");
+						id.val("");
+						id.focus();
+					} else {
+						if(confirm("사용가능한 아이디 입니다. 사용하시겠습니까?")) {
+							$("form :submit").removeAttr("disabled");
+							id.attr("readonly", true);
+						} else {
+							id.focus();
+						}
+					}
+				},
+				error : function() {
+					console.log("아이디 중복체크용 ajax통신 실패");
+				}
+			});
+		})
+	</script>
+		  
+		  
+		  
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
