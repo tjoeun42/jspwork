@@ -13,14 +13,12 @@ body { width: 1000px; }
 header {height: 100px;}
 header>.logo {float: left;}
 header>div>img {width: 150px; margin-top: 40px; }
-header>#login {text-align:right; clear:both; margin-right:20px;}
+header>#login {clear:both; text-align:right; margin-right:20px;}
 
 /* nav */
 header>nav {float: right; margin-top: 20px; padding: 10px;}
 .nav>li {float:left; width: 200px; text-align: center; position: relative; padding: 5px 0; }
 .nav>li:hover{background-color: rgb(4, 4, 122); color:white;}
-
-
 
 /* 본문 */
 /* img */
