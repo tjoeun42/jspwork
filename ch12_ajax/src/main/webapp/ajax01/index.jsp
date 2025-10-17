@@ -123,7 +123,7 @@
 	</script>
 	
 	<hr>
-	
+<!-- 	
 	<form action="idCheck.me" name="idCheckFrm">
 		ID : <input name="id" id="id" required >&nbsp; <input type="button" value="ID중복확인" id="idCheckBtn"><p/>
 		<input type="submit" value="회원가입" disabled>
@@ -156,8 +156,48 @@
 			});
 		})
 	</script>
-		  
-		  
+-->	  
+	<form action="idCheck.me" name="idCheckFrm">
+		ID : <input name="id" id="id" required ><p/>
+		<div id="checkResult" style="font-size:0.8em; disply:none"></div>
+		<input type="submit" value="회원가입" disabled>
+	</form>
+	
+	<script type="text/javascript">
+		let id = $('#id');
+		
+		id.keyup(function() {
+			if(id.val().length >= 3) {
+				$.ajax({
+					url: "idCheck.me",
+					data: {checkId: id.val()},
+					success:function(result) {
+						console.log(result);
+						if(result == "idN") {
+							$("#checkResult").show();
+							$("#checkResult").css("color","red")
+											 .text("중복된 아이디입니다. 다시 입력해 주세요");
+							$("form :submit").attr("disabled", true);
+						} else {
+							$("#checkResult").show();
+							$("#checkResult").css("color","green")
+											 .text("멋진 아이디네요. 사용가능");
+							$("form :submit").attr("disabled", false);
+						}
+					},
+					error:function() {
+						console.log("아이디 중복체크용 ajax통신 실패");
+					}
+				})
+			} else {
+				$("#checkResult").hide();
+				$("form :submit").attr("disabled", true);
+			}
+		})
+	</script>
+	
+	
+	  
 		  
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
