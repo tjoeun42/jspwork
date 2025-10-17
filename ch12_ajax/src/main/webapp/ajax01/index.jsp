@@ -196,8 +196,73 @@
 		})
 	</script>
 	
+	<hr>
 	
+	<h3>2. 버튼 클릭시 post방식으로 서버에 여러개의 데이터 전송 및 응답</h3>
+	이름 : <input id="name" name="name"><br>
+	나이 : <input type="number" id="age" name="age"><br>
+	<input type="button" value="전송" id="btn2"><br>
 	  
+	<!--   v1, v2 일때 응답
+	응답 : <span id="output2"></span>
+	 -->
+	 
+	<!--   v3 일때 응답 -->
+	응답 : 
+	<ul id="output2">
+	</ul>
+	
+	<script type="text/javascript">
+		$("#btn2").click(function() {
+			$.ajax({
+				url: "ajax3.do",
+				data: {
+					name: $("#name").val(), 
+					age: $("#age").val()
+				},
+				type: "post",
+				success:function(result) {
+					console.log(result);
+					
+					// v1, v2 = 일반 text/html로 반환
+					// $("#output2").text(result);
+					
+					/*
+					// v3.  JSONArray로 반환
+					console.log(result[0]);
+					console.log(result[1]);
+					
+					const value = "<li>이름 : " + result[0] + "</li>" 
+								+ "<li>나이 : " + result[1] + "</li>";
+					$("#output2").html(value);
+					$("#name").val("");
+					$("#age").val("");
+					*/
+					
+					// v4. JSONObject
+					console.log(result);
+					console.log(result.name);
+					console.log(result.age);
+					
+					const value = "<li>이름 : " + result.name + "</li>" 
+								+ "<li>나이 : " + result.age + "</li>";
+					$("#output2").html(value);
+					$("#name").val("");
+					$("#age").val("");
+				},
+				error:function() {
+					console.log("ajax통신 실패");
+				}
+			})
+		})
+	</script>
+	
+	
+	
+	
+	
+	
+	
 		  
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
