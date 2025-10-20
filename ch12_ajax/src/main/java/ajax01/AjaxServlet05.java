@@ -33,7 +33,7 @@ public class AjaxServlet05 extends HttpServlet {
 		response.getWriter().print(jArr);
 		*/
 		
-		// 2.
+		// 2. Gson 사용
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(alist, response.getWriter());
 	}
