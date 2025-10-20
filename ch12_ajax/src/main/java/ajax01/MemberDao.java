@@ -75,4 +75,38 @@ public class MemberDao {
 		}	
 		return flag;
 	}
+	
+	// id에 해당하는 한 행을 Member bean에 담아 리턴하기
+	public Member getMember(String id) {
+		Member mem = new Member();
+		try {
+			con = pool.getConnection();
+			sql = "select * from member where id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mem.setId(rs.getString("id"));
+				mem.setName(rs.getString("name"));
+				mem.setGender(rs.getString("gender"));
+				mem.setEmail(rs.getString("email"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+		return mem;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

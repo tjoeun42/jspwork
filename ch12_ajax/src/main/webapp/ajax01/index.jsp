@@ -248,7 +248,7 @@
 								+ "<li>나이 : " + result.age + "</li>";
 					$("#output2").html(value);
 					$("#name").val("");
-					$("#age").val("");
+					$("#age").val("");  
 				},
 				error:function() {
 					console.log("ajax통신 실패");
@@ -257,10 +257,28 @@
 		})
 	</script>
 	
+	<h3>3. 서버에 데이터 전송 후, 조회된 데이터를 bean객체로 응답</h3>
 	
+	검색하고자 하는 회원 ID : <input id="inputId">
+	<input type="button" id="btn3" value="조회"><p/>
 	
+	<div id="output3"></div>
 	
-	
+	<script type="text/javascript">
+		$("#btn3").click(function() {
+			$.ajax({
+				url : "ajax4.do",
+				data : {id : $("#inputId").val()},
+				success : function(result) {
+					console.log(result);
+				},
+				error : function() {
+					console.log("ajax 통신 실패");
+				}
+			})
+		})
+	</script>
+
 	
 	
 		  
