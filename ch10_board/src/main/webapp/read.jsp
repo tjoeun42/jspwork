@@ -35,17 +35,17 @@
 <body>
 	<table align="center">
 		<tr>
-			<th colspan=4 bgcolor="#8041D9"><font color="white">글 읽 기</font></th>
+			<th colspan=4 bgcolor="#476600"><font color="white">글 읽 기</font></th>
 		</tr>
 		<tr>
-			<td align="center" bgcolor="#D1B2FF" width="15%">이름</td>
-			<td align="center" bgcolor="#E8D9FF" width="35%"><%=board.getName() %></td>
-			<td align="center" bgcolor="#D1B2FF" width="15%">등록날짜</td>
-			<td align="center" bgcolor="#E8D9FF" width="35%"><%=board.getRegdate().substring(0,10) %></td>
+			<td align="center" bgcolor="#B3D26C" width="15%">이름</td>
+			<td align="center" bgcolor="#E9FFA2" width="35%"><%=board.getName() %></td>
+			<td align="center" bgcolor="#B3D26C" width="15%">등록날짜</td>
+			<td align="center" bgcolor="#E9FFA2" width="35%"><%=board.getRegdate().substring(0,10) %></td>
 		</tr>
 		<tr>
-			<td align="center" bgcolor="#D1B2FF" width="15%">제목</td>
-			<td colspan="3" bgcolor="#E8D9FF"><%=board.getSubject() %></td>
+			<td align="center" bgcolor="#B3D26C" width="15%">제목</td>
+			<td colspan="3" bgcolor="#E9FFA2"><%=board.getSubject() %></td>
 		</tr>
 		<tr>
 			<td colspan="4"><br>본문내용 :<br><%=board.getContent() %><br><br><br></td>
