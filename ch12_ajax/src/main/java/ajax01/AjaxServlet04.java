@@ -21,6 +21,7 @@ public class AjaxServlet04 extends HttpServlet {
 		System.out.println(id);
 		System.out.println(bean.getName());
 		
+		/*
 		// JSONObject({key:value, key:value, ... })
 		JSONObject jobj = new JSONObject();
 		jobj.put("userId", bean.getId());
@@ -29,6 +30,21 @@ public class AjaxServlet04 extends HttpServlet {
 		jobj.put("email", bean.getEmail());
 		
 		response.setContentType("application/json; charset=UTF-8");
-		response.getWriter().print(jobj);	
+		response.getWriter().print(jobj);
+		*/
+		
+		JSONObject jobj = new JSONObject();
+		if(bean == null) {
+			jobj.put("status", "fail");
+			jobj.put("message", "해당 ID를 찾을 수 없습니다");
+		} else {
+			jobj.put("status", "success");
+			jobj.put("userId", bean.getId());
+			jobj.put("userName", bean.getName());
+			jobj.put("gender", bean.getGender());
+			jobj.put("email", bean.getEmail());
+		}
+		response.setContentType("application/json; charset=UTF-8");
+		response.getWriter().print(jobj);
 	}
 }
