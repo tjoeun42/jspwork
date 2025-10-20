@@ -271,6 +271,42 @@
 				data : {id : $("#inputId").val()},
 				success : function(result) {
 					console.log(result);
+					
+					/*
+					// 2.
+					if(result.status === "fail") {
+						$("#output3").html("<b style='color:red'>" + result.message + "</b>");
+					} else {
+						const value = "*********** 검색 결과 ***********<br>"
+									+ "ID : " + result.userId + "<br>"
+									+ "이름 : "  + result.userName + "<br>"
+									+ "성별 : "  + result.gender + "<br>"
+									+ "EMAIL : "  + result.email;
+						$("#output3").html(value);
+					}
+					*/
+					/*
+					// 3.
+					const value = "*********** 검색 결과 ***********<br>"
+						+ "ID : " + result.id + "<br>"
+						+ "이름 : "  + result.name + "<br>"
+						+ "성별 : "  + result.gender + "<br>"
+						+ "EMAIL : "  + result.email;
+					$("#output3").html(value);
+					*/
+					
+					// 4.
+					if(result.status === "fail") {
+						$("#output3").html("<b style='color:red'>" + result.message + "</b>");
+					} else {
+						const mem = result.member;
+						const value = "*********** 검색 결과 ***********<br>"
+									+ "ID : " + mem.id + "<br>"
+									+ "이름 : "  + mem.name + "<br>"
+									+ "성별 : "  + mem.gender + "<br>"
+									+ "EMAIL : "  + mem.email;
+						$("#output3").html(value);
+					}
 				},
 				error : function() {
 					console.log("ajax 통신 실패");

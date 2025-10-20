@@ -124,8 +124,6 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [id=" + id + ", pwd=" + pwd + ", name=" + name + ", gender=" + gender + ", birthday=" + birthday
-				+ ", email=" + email + ", zipcode=" + zipcode + ", address=" + address + ", detail_address="
-				+ detail_address + ", hobby=" + Arrays.toString(hobby) + ", job=" + job + "]";
+		return "Member [id=" + id + ", name=" + name + ", gender=" + gender + ", email=" + email + "]";
 	}
 }
