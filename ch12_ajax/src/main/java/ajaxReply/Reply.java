@@ -9,6 +9,14 @@ public class Reply {
 	
 	public Reply() {
 	}
+	
+	public Reply(int no, String content, String name, String redate) {
+		this.no = no;
+		this.content = content;
+		this.name = name;
+		this.redate = redate;
+	}
+
 	public Reply(int no, String content, int ref, String name, String redate) {
 		this.no = no;
 		this.content = content;
