@@ -355,7 +355,6 @@
 							+ "</tr>";
 					}
 					$("#output4 tbody").html(value);
-					
 				},
 				error : function() {
 					console.log("ajax 통신 실패");
@@ -363,19 +362,5 @@
 			})
 		})
 	</script>
-
-	
-	
-		  
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
