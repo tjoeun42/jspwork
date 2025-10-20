@@ -314,6 +314,55 @@
 			})
 		})
 	</script>
+	
+	<h3>4. 응답데이터로 조회된 여러 bean객체들이 담겨있는 ArrayList받기</h3>
+	
+	<input type="button" id="btn4" value="전체 회원 조회"><br><br>
+	
+	<table id="output4" border="1">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>이름</th>
+				<th>성별</th>
+				<th>EMAIL</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+	<script>
+		$("#btn4").click(function() {
+			$.ajax({
+				url : "ajax5.do",
+				success : function(result) {
+					console.log(result);
+					
+					let value = "";
+					for(let i=0; i<result.length; i++) {
+						let gen;
+						if(result[i].gender == 1) {
+							gen = "남";
+						} else {
+							gen = "여";
+						}
+						value += "<tr>"
+								+ "<td>" + result[i].id + "</td>"
+								+ "<td>" + result[i].name + "</td>"
+								+ "<td>" + gen + "</td>"
+								+ "<td>" + result[i].email + "</td>"
+							+ "</tr>";
+					}
+					$("#output4 tbody").html(value);
+					
+				},
+				error : function() {
+					console.log("ajax 통신 실패");
+				}
+			})
+		})
+	</script>
 
 	
 	

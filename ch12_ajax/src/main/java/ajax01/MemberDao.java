@@ -1,6 +1,9 @@
 package ajax01;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class MemberDao {
 	private DBConnectionMgr pool = DBConnectionMgr.getInstance();
@@ -99,14 +102,27 @@ public class MemberDao {
 		return mem;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 전체 회원 검색
+	public ArrayList<Member> getAllMember() {
+		ArrayList<Member> alist = new ArrayList<>();
+		try {
+			con = pool.getConnection();
+			sql = "select * from member";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Member mem = new Member();
+				mem.setId(rs.getString("id"));
+				mem.setName(rs.getString("name"));
+				mem.setGender(rs.getString("gender"));
+				mem.setEmail(rs.getString("email"));
+				alist.add(mem);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con);
+		}
+		return alist;
+	}
 }
