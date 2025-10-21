@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, com.study.dto.Person" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -127,20 +128,165 @@
 		<h4>Bye World</h4>
 	</c:if>
 	
+	<br><br>
 	
+	<h3>3. 조건문 Choose (c:choose, c:when, c:otherwise)</h3>
+	<pre>
+	- java의 if-else, if-else 문과 비슷한 역할을 하는 태그
+	- 각 조건들을 c:choose의 하위요소로 c:when을 통하여 작성 (else문 역할 -> c:otherwise)
+	</pre>
+<%-- 	
+	<%
+		if(num1 > 20) {
+	%>
+	<%
+		} else if {
+	%>
+	<%
+		} else {
+	%>
+	<%		
+		}
+	%>
+--%>
+	<c:choose>
+		<c:when test="${num1 gt 20 }">
+			<b>20보다 큰 숫자</b>
+		</c:when>
+		<c:when test="${num1 ge 10 }">
+			<b>20보다 작고 10보다 크거나 같은 숫자</b>
+		</c:when>
+		<c:otherwise>
+			<b>10보다 작은 숫자</b>
+		</c:otherwise>
+	</c:choose>
 	
+	<hr>
 	
+	<h3>4. 반복문 - forEach</h3>
+	<pre>
+	for loop문 - (c:forEach var="변수명" begin="초기값" end="끝값" [step="증가값"])
+	향상된 for문 - (c:forEach var="변수명" items="순차적으로접근하고자하는객체(배열|컬렉션)" [varStatus="현재접근된요소의상태값을보관할변수명"])
+	</pre>
 	
+	<c:forEach var="i" begin="1" end="10" step="2">
+		반복확인 : ${i}<br>
+	</c:forEach>
+	<br>
 	
+	<c:forEach var="i" begin="1" end="6">
+		<h${i}>태그안에서도 적용가능</h${i}>
+	</c:forEach>
 	
+	<c:set var="colors">
+		red, yellow, green, pink
+	</c:set>
 	
+	colors 변수값 : ${colors}<br>
 	
+	<ul>
+		<c:forEach var="c" items="${colors}">
+			<li style="color: ${c}">${c}</li>
+		</c:forEach>
+	</ul>
 	
+	<%
+		ArrayList<Person> list = new ArrayList<>();
+		list.add(new Person("이하늘", 24, "여자"));
+		list.add(new Person("박미향", 23, "여자"));
+		list.add(new Person("강미남", 27, "남자"));
+	%>
 	
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<c:set var="pList" value="<%=list %>" scope="request" />
+	
+	<table border="1">
+		<thead>
+			<tr>
+				<th>index번호</th>
+				<th>count번호</th>
+				<th>이름</th>
+				<th>나이</th>
+				<th>성별</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:choose>
+				<c:when test="${empty pList}">
+					<tr>
+						<td colspan="3">조회된 사람이 없습니다</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="p" items="${pList}" varStatus="status">
+						<tr>
+							<td>${status.index}</td> <!-- index는 0부터 시작, count는 1부터 시작 -->
+							<td>${status.count}</td>
+							<td>${p.name}</td>
+							<td>${p.age}</td>
+							<td>${p.gender}</td>
+						</tr>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+			<%-- 
+			<%
+			if(list.isEmpty()) {
+			%>
+				<tr>
+					<td colspan="3">조회된 사람이 없습니다</td>
+				</tr>
+			<%	
+			} else {
+				for(Person p : list) {
+			%>
+					<tr>
+						<td><%=p.getName() %></td>
+						<td><%=p.getAge() %></td>
+						<td><%=p.getGender() %></td>
+					</tr>
+			<%
+				}
+			}
+			%> 
+			--%>
+		</tbody>
+	</table>
+	
+	<hr>
+	
+	<h3>5. 반복문 forTokens</h3>
+	<pre>
+	(c:forTokens var="변수명" items="분리시키고자하는 문자열" delims="구분자")
+	- 구분자를 통하여 분리된 각각의 문자열에 순차적으로 접근하여 반복 수행
+	- java의 split("구분자") 또는 StringTokenizer와 비슷한 기능 처리
+	</pre>
+	
+	<c:set var="device" value="컴퓨터,핸드폰,TV.에어컨/냉장고.세탁기" />
+	
+	<ol>
+		<c:forTokens var="d" items="${device}" delims=",./">
+			<li>${d}</li>
+		</c:forTokens>
+	</ol>
+	
+	<hr>
+	
+	<h3>6. url, 쿼리 스트링 관련 - url, param</h3>
+	<pre>
+	- url 경로를 생성하고, 쿼리스트링을 정의해 둘 수 있는 태그
+	
+	&lt;c:url var="변수명" value="요청할url"&gt;
+		&lt;c:param name="키" value="값" /&gt;
+		&lt;c:param name="키" value="값" /&gt;
+	&lt;/c:url&gt;
+	</pre>
+	
+	<a href="list.do?nowPage=1&num=2">기존 방식</a><br>
+	
+	<c:url var="u" value="list.do">
+		<c:param name="nowPage" value="1" />
+		<c:param name="num">2</c:param> 
+	</c:url>
+	<a href="${u}">c:url 이용한 방식</a>
 </body>
 </html>
-
-
-
-
