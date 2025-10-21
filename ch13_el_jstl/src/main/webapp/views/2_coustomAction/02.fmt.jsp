@@ -27,6 +27,11 @@
 	그냥 출력 : ${num1}<br>
 	세자리마다 구분하여 출력 : <fmt:formatNumber value="${num1}" /><br>
 	숫자 그대로 출력 : <fmt:formatNumber value="${num1}" groupingUsed="false"/><br><br>
+	
+	percent : <fmt:formatNumber value="${num2}" type="percent" /><br>
+	currency : <fmt:formatNumber value="${num3}" type="currency" groupingUsed="false" /><br>
+	currencySymbol $ : <fmt:formatNumber value="${num3}" type="currency" currencySymbol="$" /><br>
+	currencySymbol ￥ : <fmt:formatNumber value="${num3}" type="currency" currencySymbol="￥" />
 </body>
 </html>
 
