@@ -1,0 +1,146 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JSTL Core Library</title>
+</head>
+<body>
+	<h1>JSTL Core Library</h1>
+	
+	<h3>1. 변수(속성 == attribute)</h3>
+	<h4>1.1 변수 선언과 초기화</h4>
+	<pre>
+	* 변수 선언과 동시에 초기화 (c:set var="변수명" value="값" [scope=""])
+	  - 변수 선언하고 초기값을 대입해두는 기능을 제공
+	  - 해당 변수를 어떤 scope에 담아둘것인지 지정 가능함(생략시 기본값 pageScope)
+	    => 해당 scope에 setAttribute를 통해 key-value형태로 데이터를 담아놓는 거와 같음
+	    => c:set으로 선언된 변수는 EL로 접근하여 사용(스크립팅원소로는 접근 불가)   
+	  - 변수 타입은 별도로 지정하지 않음
+	  - 초기값은 반드시 지정해야 됨
+	</pre>
+	
+	<c:set var="num1" value="10" /> <!-- pageContext.setAttribute("num1", 10) -->
+	<c:set var="num2" value="20" scope="request" />
+	
+	num1 변수의 값 : ${ num1 }<br>
+	num2 변수의 값 : ${ num2 }<br><br>
+	
+	<c:set var="result" value="num1+num2" scope="session"/> <!-- string -->
+	<c:set var="result" value="${num1 + num2}" scope="session" />
+	
+	result : ${ result }<br><br>
+	
+	pageScope.num1 : ${ pageScope.num1 }<br>
+	requestScope.num2 : ${ requestScope.num2 }<br>
+	sessionScope.result : ${ sessionScope.result }<br>
+	requestScope.result : ${ requestScope.result }<br><br>
+	
+	<!-- value 속성 대신 시작태그와 종료태그 사이에 초기값 지정 가능 -->
+	<c:set var="result" scope="request">
+		9999999
+	</c:set>
+	
+	requestScope.result : ${ requestScope.result }<br>
+	sessionScope.result : ${ sessionScope.result }<br>
+	
+	<h4>1.2 변수 삭제</h4>
+	<pre>
+	* 변수 삭제 (c:remove var="제거할 변수명" [scope=""])
+	  - 해당 scope 영역에서 해당 변수를 찾아서 제거하는 태그
+	  - scope 지정 생략시 모든 scope에서 해당 변수를 다 찾아서 제거함
+	    => 즉, 해당 scope에 .removeAttribute를 통해 제거하는 거라고 생각하면 됨
+	</pre>
+	
+	삭제전 result : ${ result }<br><br>
+	
+	1) 특정 scope 지정하여 삭제<br>
+	<c:remove var="result" scope="request"/>
+	requestScope에서 삭제후 result : ${ result }<br><br>
+
+	2) 모든 scope에서 삭제<br>
+	<c:remove var="result"/>
+	모든 scope에서 삭제 후 result : ${ result }<br>
+	
+	
+	<h4>1.3. 변수 출력</h4>
+	<pre>
+	* 변수(데이터) 출력 (c:out value="출력하고자하는 값" [default="기본값"][escapeXml="true|false"])
+	  데이터를 출력하고자 할 때 사용하는 태그
+	</pre>
+	
+	<c:out value="${num1}" /><br>
+	<c:out value="${abcd}" default="없음" /><br><br>
+	
+	<c:set var="outTest" value="<b>출력테스트</b>" />
+	
+	<!-- escapeXml를 넣지않으면 기본값 true : 태그 해석안됨(문자열로 취급) 
+		 escapeXml = "false" 이면 태그 해석
+	-->
+	<c:out value="${ outTest }" /><br>
+	<c:out value="${ outTest }" escapeXml = "false" /><br>
+	
+	<hr>
+	
+	<h3>2. 조건문 - if (c:if test="조건식")</h3>
+	<pre>
+	- java의 if문과 비슷한 역할을 하는 태그
+	- 조건식은 test속성에 작성(단, el구문으로 기술해야됨)
+	</pre>
+<%-- 기존 문법
+	<%
+		if(num1 > num2) {
+	%>
+			<b>num1이 num2보다 크다</b>
+	<%
+		}
+	%>
+--%>
+	
+	<c:if test="${ num1 gt num2 }">
+		<b>num1이 num2보다 크다</b>
+	</c:if>
+	
+	<c:if test="${ num1 le num2 }">
+		<b>num1이 num2보다 작거나 같다</b>
+	</c:if>
+	
+	<br>
+	
+	<c:set var="str" value="안녕하세요" />
+<%-- 	
+	<%
+	if(str.equals("안녕하세요")) {
+	%>
+		<h4>Hello World</h4>
+	<%
+	}
+	%>
+--%>
+	<c:if test="${str eq '안녕하세요'}">
+		<h4>Hello World</h4>
+	</c:if>
+	
+	<c:if test="${str ne '안녕하세요'}">
+		<h4>Bye World</h4>
+	</c:if>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>
+
+
+
+
