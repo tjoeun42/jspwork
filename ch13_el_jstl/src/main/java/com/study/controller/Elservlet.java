@@ -1,13 +1,16 @@
 package com.study.controller;
 
+import java.io.IOException;
+
+import com.study.dto.Person;
+
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-import com.study.dto.Person;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/el.do")
 public class Elservlet extends HttpServlet {
@@ -42,6 +45,19 @@ public class Elservlet extends HttpServlet {
 		// requestScope에 담기
 		request.setAttribute("classRoom", "801 강의장");
 		request.setAttribute("student", new Person("더조은", 23, "남자"));
+		
+		// sessionScope에 담기
+		HttpSession session = request.getSession();
+		session.setAttribute("academy", "tjoeun");
+		session.setAttribute("teacher", new Person("김지원", 31, "여자"));
+		
+		// requestScope와 sessionScope에 동일한 키로 담기
+		request.setAttribute("scope", "request");
+		session.setAttribute("scope", "session");
+		
+		// applicationScope에 담기
+		ServletContext application = request.getServletContext();
+		application.setAttribute("scope", "application");
 		
 		// 응답페이지를 지정하여 거기에 포워딩 되도록 설정
 		request.getRequestDispatcher("views/1_EL/01.el.jsp").forward(request, response);
